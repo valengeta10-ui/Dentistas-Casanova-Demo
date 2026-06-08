@@ -1,0 +1,6 @@
+{
+  "name": "Dentistas Casanova",
+  "description": "Página web premium de alta conversión para la clínica dental Dentistas Casanova en Guadalupe, Nuevo León.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
