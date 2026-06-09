@@ -1,9 +1,81 @@
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { Monitor, ShieldAlert, CheckCircle, ChevronRight, Star } from "lucide-react";
 import { IMAGE_PATHS } from "../data";
 import { easeOutQuint, durationNormal, durationSlow, staggerNormal, viewportAmountNormal } from "../utils/animationConstants";
 
 export default function TechSection() {
+  const [years, setYears] = useState(30);
+  const [rating, setRating] = useState(4.0);
+  const [commitment, setCommitment] = useState(80);
+  const statsRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    const duration = 2000;
+    const steps = 40;
+    const interval = duration / steps;
+    
+    let currentYear = 30;
+    let currentRating = 4.0;
+    let currentCommitment = 80;
+    
+    const yearInterval = setInterval(() => {
+      currentYear += 0.25;
+      if (currentYear >= 40) {
+        setYears(40);
+        clearInterval(yearInterval);
+      } else {
+        setYears(Math.floor(currentYear));
+      }
+    }, interval);
+    
+    const ratingInterval = setInterval(() => {
+      currentRating += 0.025;
+      if (currentRating >= 5.0) {
+        setRating(5.0);
+        clearInterval(ratingInterval);
+      } else {
+        setRating(parseFloat(currentRating.toFixed(1)));
+      }
+    }, interval);
+    
+    const commitmentInterval = setInterval(() => {
+      currentCommitment += 0.5;
+      if (currentCommitment >= 100) {
+        setCommitment(100);
+        clearInterval(commitmentInterval);
+      } else {
+        setCommitment(Math.floor(currentCommitment));
+      }
+    }, interval);
+    
+    return () => {
+      clearInterval(yearInterval);
+      clearInterval(ratingInterval);
+      clearInterval(commitmentInterval);
+    };
+  }, [isVisible]);
+  
   const points = [
     { title: "Horarios Flexibles", text: "Ofrecemos horarios adaptables para facilitar tu atención dental." },
     { title: "Radiografía Digital", text: "Utilizamos radiografía digital para mayor precisión en los diagnósticos." },
@@ -78,6 +150,7 @@ export default function TechSection() {
 
             {/* Statistics Row with premium layouts */}
             <motion.div 
+              ref={statsRef}
               className="grid grid-cols-3 gap-4 pt-6 text-center border-t border-white/10"
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -85,17 +158,17 @@ export default function TechSection() {
               transition={{ duration: durationNormal, delay: staggerNormal * 5, ease: easeOutQuint }}
             >
               <div className="space-y-1">
-                <p className="text-3xl sm:text-4xl font-serif font-extrabold text-accent">40+</p>
+                <p className="text-3xl sm:text-4xl font-serif font-extrabold text-accent">{years}+</p>
                 <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">Años de experiencia</p>
               </div>
               <div className="space-y-1 border-x border-white/10 px-2">
                 <p className="text-3xl sm:text-4xl font-serif font-extrabold text-secondary flex items-baseline justify-center gap-0.5">
-                  5.0 <Star className="w-4.5 h-4.5 text-accent fill-accent inline" />
+                  {rating} <Star className="w-4.5 h-4.5 text-accent fill-accent inline" />
                 </p>
                 <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">Calificación</p>
               </div>
               <div className="space-y-1">
-                <p className="text-3xl sm:text-4xl font-serif font-extrabold text-emerald-400">100%</p>
+                <p className="text-3xl sm:text-4xl font-serif font-extrabold text-emerald-400">{commitment}%</p>
                 <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest">Compromiso con el paciente</p>
               </div>
             </motion.div>

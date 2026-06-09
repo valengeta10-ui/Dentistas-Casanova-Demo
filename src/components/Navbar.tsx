@@ -26,6 +26,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const menuItems = [
     { label: "Inicio", href: "#inicio" },
     { label: "Nosotros", href: "#nosotros" },
+    { label: "Cédulas", href: "#cedulas" },
     { label: "Servicios", href: "#servicios" },
     { label: "Reseñas", href: "#resenas" },
     { label: "Ubicación", href: "#ubicacion" },

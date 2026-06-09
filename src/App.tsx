@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import TrustSection from "./components/TrustSection";
 import AboutSection from "./components/AboutSection";
+import ProfessionalLicensesSection from "./components/ProfessionalLicensesSection";
 import ServicesSection from "./components/ServicesSection";
 import TechSection from "./components/TechSection";
 import ReviewsSection from "./components/ReviewsSection";
@@ -55,6 +56,9 @@ function AppContent() {
 
       {/* Asymmetric Editorial About Us Section */}
       <AboutSection />
+
+      {/* Professional Licenses Section */}
+      <ProfessionalLicensesSection />
 
       {/* Services Bento Grid Slider */}
       <ServicesSection onOpenBooking={handleOpenBooking} />
